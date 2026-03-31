@@ -1,4 +1,5 @@
 # Customer Churn Analysis — Telecom / E-Commerce (Sri Lanka)
+
 > **Repo:** `customer-churn-analysis-telecom-lk`  
 > **Role simulated:** Data Analyst, Retention Strategy Team  
 > **Tools:** Python · SQL · Power BI · DAX  
@@ -8,9 +9,13 @@
 
 ## The Business Problem
 
-A Sri Lankan telecom and e-commerce company serving 50,000 active customers was losing approximately **13.5% of its customer base annually** to churn. The CEO had no visibility into which customers were about to leave, why they were leaving, or which segments were highest risk. Every Monday morning the question was the same: *"Who are we about to lose and what do we do about it?"*
+A Sri Lankan telecom and e-commerce company serving 50,000 active customers was losing approximately **13.5% of its customer base every year** — and nobody knew why.
 
-This analysis answers that question with data.
+The CEO had no visibility into which customers were about to leave, which segments were highest risk, or where retention spend would have the most impact. Every Monday morning the question was the same:
+
+> *"Who are we about to lose — and what do we do about it?"*
+
+This project answers that question end-to-end: from raw data engineering through SQL analysis to a live Power BI executive dashboard the CEO can check every Monday without asking anyone for a report.
 
 ---
 
@@ -21,73 +26,103 @@ This analysis answers that question with data.
 | Engineered telecom dataset | 50,000 | `data/generate_dataset.py` | Primary analysis — SL market calibrated |
 | IBM Telco Churn dataset | 7,043 | Kaggle public dataset | Real-world validation |
 
-The engineered dataset was built using realistic statistical distributions: negative binomial for support ticket frequency, exponential decay for login inactivity, and tier-correlated spend curves. Churn probability was modelled as a weighted combination of seven independent risk factors. The IBM dataset was used to validate that key findings held across real-world data — they did.
+The engineered dataset was built using realistic statistical distributions — negative binomial for support ticket frequency, exponential decay for login inactivity, and tier-correlated spend curves — calibrated to Sri Lankan telecom market benchmarks. Churn probability was modelled as a weighted combination of seven independent risk factors, not random assignment.
+
+The IBM Telco dataset was used to validate that findings were not artefacts of synthetic data. Every key finding held across both datasets.
 
 ---
 
 ## Methodology
 
-**Step 1 — Data Engineering**  
-Generated a 50,000-row customer dataset using Python (faker, numpy, pandas) with 14 features covering demographics, product usage, support behaviour, and billing. Churn was modelled with realistic drivers rather than random assignment.
+**Step 1 — Data Engineering**
 
-**Step 2 — SQL Analysis**  
-Wrote 10 documented SQL queries covering: overall churn metrics, segment breakdowns, cohort retention (window functions), spend drop detection (LAG), risk scoring (CASE WHEN), support ticket impact, contract analysis, regional revenue, inactivity thresholds, and a prioritised retention action list.
+Generated a 50,000-row customer dataset using Python (faker, numpy, pandas) with 14 features covering demographics, product usage, support behaviour, and billing history. The decision to engineer rather than use a generic dataset was deliberate — no public dataset exists calibrated to Sri Lankan telecom market conditions, so building one from realistic distributions was the only way to make the findings locally meaningful.
 
-**Step 3 — Power BI Dashboard**  
-Built a 3-page executive dashboard: Executive Summary → Segment Drilldown → Individual Customer Risk. All measures written in DAX. Published via Power BI Service for live recruiter access.
+**Step 2 — SQL Analysis**
+
+Wrote 10 documented SQL queries covering churn metrics, cohort retention using window functions, spend drop detection via LAG(), and composite risk scoring via CASE WHEN. Initial hypothesis was that spend drop would be the strongest churn predictor — the data disagreed. Support ticket volume consistently outperformed spend as a leading indicator, which shifted the entire retention strategy recommendation from discount-based win-back toward proactive support intervention.
+
+**Step 3 — Power BI Dashboard**
+
+Built a 3-page executive dashboard — Executive Summary → Segment Drilldown → Individual Customer Risk — designed so each page serves a different audience. The CEO sees KPIs. The retention manager sees segment patterns. The retention team sees a ranked action list. All measures written in DAX. Published via Power BI Service for live access.
 
 ---
 
 ## Key Findings
 
 ### Finding 1 — The Support Ticket Rule
+
 > Customers who raise **3 or more support tickets** churn at **4.2× the rate** of customers with zero tickets.
 
-This is the single most actionable finding. The churn rate for 0-ticket customers is approximately 6%. For 3+ ticket customers it exceeds 25%. The inflection point is ticket #2 — after which churn probability rises steeply.
+The churn rate for 0-ticket customers sits at approximately 6%. For customers with 3 or more tickets it exceeds 25%. The critical inflection point is ticket number two — after which churn probability rises steeply and recovery becomes significantly harder.
 
-**Recommendation:** Trigger a proactive retention call after a customer's **second** support ticket — before they reach three. A human outreach at this stage costs far less than acquiring a replacement customer.
+This was the analysis's most surprising finding. The assumption going in was that price sensitivity would dominate. Instead, unresolved support friction emerged as the single strongest churn signal in the data.
+
+**Recommendation:** Trigger a proactive retention call after a customer's **second** support ticket — before they reach three. Human outreach at this stage costs a fraction of acquiring a replacement customer. The intervention window is narrow — act at ticket two, not ticket three.
+
+---
 
 ### Finding 2 — The 30-Day Inactivity Cliff
-> Churn rate doubles for customers who have not logged in for **more than 30 days**.
 
-Customers inactive for 8–14 days churn at ~10%. Customers inactive for 31–60 days churn at ~22%. The transition happens sharply between day 25 and day 35.
+> Churn rate **doubles** for customers who have not logged in for more than **30 days**.
 
-**Recommendation:** Send an automated personalised re-engagement email at **day 25** of inactivity — not day 30. By day 30 the customer has already mentally churned. The email should reference their last used feature and offer a relevant incentive.
+Customers inactive for 8–14 days churn at approximately 10%. Customers inactive for 31–60 days churn at approximately 22%. The transition is not gradual — it happens sharply between day 25 and day 35, suggesting a psychological disengagement threshold rather than a linear drift.
+
+**Recommendation:** Deploy an automated personalised re-engagement email at **day 25** of inactivity — not day 30. By day 30 the customer has already mentally churned. The email should reference their last used feature by name and offer a relevant incentive tied to that specific behaviour.
+
+---
 
 ### Finding 3 — New Customers Are the Highest Risk Cohort
-> Customers in their **first 6 months** churn at 2× the rate of established customers.
 
-Month-to-Month contract customers with tenure under 6 months represent the highest-risk segment. They have not yet formed a habit around the product and have no switching cost.
+> Customers in their **first 6 months** churn at **2× the rate** of established customers.
 
-**Recommendation:** Invest in a structured 90-day onboarding programme with three scheduled check-in touchpoints at days 7, 30, and 90. Offer a discounted annual contract upgrade at day 30 — customers who lock in churn at less than 5%.
+The cohort retention matrix confirms this clearly. New customers (0–6 months) retain at 77.85% overall — the lowest retention of any cohort. Champion customers (36+ months) retain at 89.46%. Month-to-Month contract customers in the new cohort represent the single highest-risk intersection in the entire dataset — no habit formed, no switching cost, no commitment.
 
-### Finding 4 — Revenue Concentration in At-Risk Segment
-> The top 500 highest-risk active customers represent **LKR 68,000+ in monthly recurring revenue**.
+**Recommendation:** Invest in a structured 90-day onboarding programme with three scheduled check-in touchpoints at days 7, 30, and 90. Offer a discounted annual contract upgrade at day 30 — customers who commit to an annual contract churn at less than 5%, compared to over 22% for Month-to-Month customers in the same cohort.
 
-Using the composite risk scoring model (Query 10), the top 500 at-risk customers can be identified and ranked by revenue impact. If the retention team converts even 30% of these calls, the monthly revenue saved exceeds the cost of running the retention programme.
+---
+
+### Finding 4 — Revenue Concentration in the At-Risk Segment
+
+> The top **471** highest-risk active customers represent **LKR 68,000+ in monthly recurring revenue**.
+
+Using the composite risk scoring model (Query 10), every active customer receives a risk score based on support tickets, inactivity, tenure, contract type, and spend trend. The top 471 customers by risk score can be identified, ranked, and assigned a recommended action — all visible on Page 3 of the dashboard.
+
+At the current 13.5% churn rate, this segment risks losing approximately **LKR 111,000 in annual recurring revenue**. A targeted retention programme calling these 471 customers costs an estimated LKR 45,000 to run. Even at 30% conversion, monthly revenue saved exceeds programme cost by **2.4×** — making this the highest-ROI retention action available to the business.
 
 ---
 
 ## Cross-Validation Against IBM Telco Dataset
 
-The same analysis pipeline was run against the IBM Telco Churn dataset (real-world, 7,043 customers). Key findings that held across both datasets:
+The same analysis pipeline was run against the IBM Telco Churn dataset (7,043 real-world customers). Key findings that held across both datasets:
 
 - Support ticket volume → top churn predictor in both ✓
-- Month-to-Month contract → significantly higher churn in both ✓  
-- New customer (short tenure) → elevated risk in both ✓
+- Month-to-Month contract → significantly higher churn in both ✓
+- New customer short tenure → elevated risk in both ✓
 - Inactivity signal → confirmed as leading indicator in both ✓
 
-This cross-dataset validation confirms that the findings are not artefacts of the synthetic data — they reflect real patterns in customer churn behaviour.
+This cross-dataset validation confirms that the findings are not artefacts of the synthetic data — they reflect real, generalisable patterns in customer churn behaviour.
 
 ---
 
 ## Dashboard Structure
 
-| Page | Purpose | Key Visuals |
-|---|---|---|
-| Executive Summary | CEO Monday morning view | Churn rate KPI, MRR lost, trend line, top risk count |
-| Segment Drilldown | Manager-level analysis | Churn by tier, region, contract, cohort retention table |
-| Individual Customer Risk | Retention team action list | Ranked customer table, risk score, recommended action |
+| Page | Audience | Purpose | Key Visuals |
+|---|---|---|---|
+| Executive Summary | CEO | Monday morning view | Churn rate, MRR lost, total churned, high risk count, region, trend line |
+| Segment Drilldown | Retention Manager | Understand why customers churn | Support ticket impact, tenure cohort matrix, contract type breakdown |
+| Individual Customer Risk | Retention Team | Daily action list | Ranked customer table with risk score and recommended action per customer |
+
+---
+
+## Business Impact Summary
+
+If deployed in a real company, this analysis enables four concrete interventions:
+
+- **Proactive support intervention at ticket #2** — estimated 25–35% reduction in churn among high-ticket customers
+- **Day-25 re-engagement email** — estimated 15–20% recovery of drifting customers before the inactivity cliff
+- **90-day onboarding programme with annual contract offer** — estimated 40% reduction in new-customer churn
+- **Weekly CEO dashboard** — eliminates the Monday morning data request entirely; the answer is always ready
 
 ---
 
@@ -140,17 +175,6 @@ python data/generate_dataset.py
 
 # 6. Open powerbi/churn_dashboard.pbix in Power BI Desktop
 ```
-
----
-
-## Business Impact Summary
-
-If this analysis were deployed in a real company:
-
-- **Proactive support intervention** at ticket #2 could reduce churn in the high-ticket segment by an estimated 25–35%
-- **Day-25 re-engagement email** could recover 15–20% of drifting customers before they cross the inactivity cliff
-- **90-day onboarding programme** with annual contract offer could cut new-customer churn by up to 40%
-- **Weekly CEO dashboard** eliminates the Monday morning data request — answer is always ready
 
 ---
 
