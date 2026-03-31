@@ -7,6 +7,24 @@
 
 ---
 
+## Dashboard Preview
+
+> Screenshots below show all three pages of the live Power BI dashboard.
+
+### Page 1 — Executive Summary
+![Executive Summary](screenshots/page1_executive_summary.png)
+*KPI cards, churn by product tier, churn by region, churn by contract type, monthly trend line. Audience: CEO — Monday morning view.*
+
+### Page 2 — Churn Drivers — Support, Tenure & Inactivity
+![Churn Drivers](screenshots/page2_churn_drivers.png)
+*Three churn drivers in one view: support ticket impact, tenure cohort retention matrix, and inactivity band chart. Audience: Retention Manager.*
+
+### Page 3 — Individual Customer Risk
+![Individual Customer Risk](screenshots/page3_individual_risk.png)
+*Ranked customer table with risk score and recommended action per customer. Audience: Retention team — daily action list.*
+
+---
+
 ## The Business Problem
 
 A Sri Lankan telecom and e-commerce company serving 50,000 active customers was losing approximately **13.5% of its customer base every year** — and nobody knew why.
@@ -44,7 +62,7 @@ Wrote 10 documented SQL queries covering churn metrics, cohort retention using w
 
 **Step 3 — Power BI Dashboard**
 
-Built a 3-page executive dashboard — Executive Summary → Segment Drilldown → Individual Customer Risk — designed so each page serves a different audience. The CEO sees KPIs. The retention manager sees segment patterns. The retention team sees a ranked action list. All measures written in DAX. Published via Power BI Service for live access.
+Built a 3-page executive dashboard — Executive Summary → Churn Drivers → Individual Customer Risk — designed so each page serves a different audience. The CEO sees KPIs. The retention manager sees segment patterns. The retention team sees a ranked action list. All measures written in DAX. Published via Power BI Service for live access.
 
 ---
 
@@ -70,6 +88,8 @@ Customers inactive for 8–14 days churn at approximately 10%. Customers inactiv
 
 **Recommendation:** Deploy an automated personalised re-engagement email at **day 25** of inactivity — not day 30. By day 30 the customer has already mentally churned. The email should reference their last used feature by name and offer a relevant incentive tied to that specific behaviour.
 
+*This finding is visualised on Page 2 of the dashboard (Churn Drivers) as a colour-coded bar chart: green = safe zone (0–14 days), amber = warning (15–30 days), red = critical (31+ days).*
+
 ---
 
 ### Finding 3 — New Customers Are the Highest Risk Cohort
@@ -87,6 +107,8 @@ The cohort retention matrix confirms this clearly. New customers (0–6 months) 
 > The top **471** highest-risk active customers represent **LKR 68,000+ in monthly recurring revenue**.
 
 Using the composite risk scoring model (Query 10), every active customer receives a risk score based on support tickets, inactivity, tenure, contract type, and spend trend. The top 471 customers by risk score can be identified, ranked, and assigned a recommended action — all visible on Page 3 of the dashboard.
+
+> **Note on revenue figures:** The dashboard Executive Summary shows **LKR 384,000** in monthly revenue lost — this is the total revenue already lost from all 6,760 churned customers. The **LKR 68,000** figure is separate: it is the monthly recurring revenue currently at risk from the 471 highest-risk *active* customers identified by the risk model. These are two different measurements — one is historical loss, the other is future risk.
 
 At the current 13.5% churn rate, this segment risks losing approximately **LKR 111,000 in annual recurring revenue**. A targeted retention programme calling these 471 customers costs an estimated LKR 45,000 to run. Even at 30% conversion, monthly revenue saved exceeds programme cost by **2.4×** — making this the highest-ROI retention action available to the business.
 
@@ -110,7 +132,7 @@ This cross-dataset validation confirms that the findings are not artefacts of th
 | Page | Audience | Purpose | Key Visuals |
 |---|---|---|---|
 | Executive Summary | CEO | Monday morning view | Churn rate, MRR lost, total churned, high risk count, region, trend line |
-| Segment Drilldown | Retention Manager | Understand why customers churn | Support ticket impact, tenure cohort matrix, contract type breakdown |
+| Churn Drivers — Support, Tenure & Inactivity | Retention Manager | Understand why customers churn | Support ticket impact, tenure cohort matrix, inactivity band chart |
 | Individual Customer Risk | Retention Team | Daily action list | Ranked customer table with risk score and recommended action per customer |
 
 ---
@@ -149,6 +171,10 @@ customer-churn-analysis-telecom-lk/
 ├── notebooks/
 │   ├── 01_eda_generated.ipynb
 │   └── 02_eda_real_ibm.ipynb
+├── screenshots/
+│   ├── page1_executive_summary.png
+│   ├── page2_churn_drivers.png
+│   └── page3_individual_risk.png
 ├── powerbi/
 │   └── churn_dashboard.pbix
 ├── powerbi_dax_measures.md
