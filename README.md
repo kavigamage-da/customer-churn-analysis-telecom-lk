@@ -3,7 +3,7 @@
 > **Repo:** `customer-churn-analysis-telecom-lk`  
 > **Role simulated:** Data Analyst, Retention Strategy Team  
 > **Tools:** Python · SQL · Power BI · DAX  
-> **Live dashboard:** [Click to view →](#) *(replace with your Power BI published link)*
+> **Live dashboard:** [Click to view →](https://app.powerbi.com/view?r=eyJrIjoiZDJjOWYzYzMtZWRiNi00MWYyLTgzNWMtMDllNmQzNjEwNGU5IiwidCI6IjMxMmEyN2Y1LTQ4ZTEtNDg1My04YWQwLTQwZTk4ODliODQwMyJ9)
 
 ---
 
@@ -161,7 +161,7 @@ customer-churn-analysis-telecom-lk/
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/YOUR_USERNAME/customer-churn-analysis-telecom-lk
+git clone https://github.com/kavigamage-da/customer-churn-analysis-telecom-lk
 
 # 2. Install dependencies
 pip install -r requirements.txt
@@ -178,5 +178,12 @@ python data/generate_dataset.py
 
 ---
 
-*Built by [Your Name] · [LinkedIn] · [GitHub]*  
+## License
+© 2025 Kavindi Gamage. All rights reserved.  
+This repository is shared for portfolio and interview purposes only.  
+The code, dataset, SQL queries, and dashboard design may not be copied or reused without explicit written permission from the author.
+
+---
+
+*Built by Kavindi Gamage · [LinkedIn](#) · [GitHub](https://github.com/kavigamage-da)*  
 *Dataset engineered to reflect Sri Lankan telecom market benchmarks. Cross-validated against IBM Telco public dataset.*
