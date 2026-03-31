@@ -9,21 +9,14 @@
 
 ## Dashboard Preview
 
-> Screenshots below show all three pages of the live Power BI dashboard.
-
 ### Page 1 — Executive Summary
 ![Executive Summary](screenshots/page1_executive_summary.png)
-*KPI cards, churn by product tier, churn by region, churn by contract type, monthly trend line. Audience: CEO — Monday morning view.*
 
 ### Page 2 — Churn Drivers — Support, Tenure & Inactivity
 ![Churn Drivers](screenshots/page2_churn_drivers.png)
-*Three churn drivers in one view: support ticket impact, tenure cohort retention matrix, and inactivity band chart. Audience: Retention Manager.*
 
 ### Page 3 — Individual Customer Risk
 ![Individual Customer Risk](screenshots/page3_individual_risk.png)
-*Ranked customer table with risk score and recommended action per customer. Audience: Retention team — daily action list.*
-
----
 
 ## The Business Problem
 
