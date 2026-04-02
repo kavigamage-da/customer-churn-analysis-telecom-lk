@@ -1,3 +1,7 @@
+﻿-- BUSINESS QUESTION: Which regions are losing the most revenue to churn?
+-- DECISION: Regional retention budget allocation.
+-- FINDING: Western Province loses most MRR in absolute terms.
+
 -- ============================================================
 -- Query 08: Regional Churn Analysis with Revenue Impact
 -- Business Question: Which regions are losing the most revenue
@@ -36,4 +40,5 @@ FROM regional_stats
 ORDER BY lost_mrr DESC;
 
 -- Expected insight: Western Province loses the most MRR in absolute terms (largest customer base).
--- But Northern/Eastern may have higher churn RATES — different problem, different solution.
+-- But Northern/Eastern may have higher churn RATES â€” different problem, different solution.
+

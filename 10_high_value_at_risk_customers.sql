@@ -1,3 +1,7 @@
+﻿-- BUSINESS QUESTION: Which customers should the retention team call THIS WEEK?
+-- DECISION: The Monday morning call list — direct output the team acts on.
+-- FINDING: Top 471 customers = LKR 68,000/month at risk. Programme ROI: 2.4x.
+
 -- ============================================================
 -- Query 10: High-Value At-Risk Customer Identification
 -- Business Question: Which specific customers should the
@@ -76,7 +80,7 @@ SELECT
     -- Human-readable action recommendation
     CASE
         WHEN flag_high_tickets = 1 AND flag_inactive = 1
-            THEN 'URGENT: Call now — support issues + inactive'
+            THEN 'URGENT: Call now â€” support issues + inactive'
         WHEN flag_high_tickets = 1
             THEN 'CALL: Resolve support tickets proactively'
         WHEN flag_inactive = 1
@@ -91,6 +95,7 @@ WHERE retention_priority_rank <= 500   -- Top 500 customers to act on this week
 ORDER BY retention_priority_rank;
 
 -- THIS IS THE MONEY QUERY.
--- This is what the CEO sees on Monday morning — a ranked list of customers
+-- This is what the CEO sees on Monday morning â€” a ranked list of customers
 -- the retention team must call before Friday.
 -- Estimated monthly revenue saved if top 100 retained: SUM(monthly_spend) for rows 1-100.
+

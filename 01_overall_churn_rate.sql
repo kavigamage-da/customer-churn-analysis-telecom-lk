@@ -1,3 +1,7 @@
+﻿-- BUSINESS QUESTION: What is our current churn rate at the top level?
+-- DECISION: Executive Summary KPIs for the CEO dashboard.
+-- FINDING: Churn concentrated in newer lower-value customers, not the high-value base.
+
 -- ============================================================
 -- Query 01: Overall Churn Rate & Key Summary Metrics
 -- Business Question: What is our current churn rate and how
@@ -20,3 +24,4 @@ FROM customers;
 
 -- Expected insight: Churned customers have lower avg spend and shorter tenure.
 -- This confirms churn is concentrated in newer, lower-value customers.
+

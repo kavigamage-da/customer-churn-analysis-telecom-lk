@@ -1,3 +1,7 @@
+﻿-- BUSINESS QUESTION: How many days of inactivity before a customer is high-risk?
+-- DECISION: The exact day to trigger the re-engagement email.
+-- FINDING: Churn spikes between day 25 and day 35. Send email at day 25.
+
 -- ============================================================
 -- Query 09: Inactivity (Last Login Days) Churn Threshold
 -- Business Question: How many days of inactivity before a
@@ -42,4 +46,5 @@ ORDER BY inactivity_segment;
 
 -- KEY FINDING: Churn rate jumps sharply after 30 days of inactivity.
 -- Recommendation: Trigger automated re-engagement email at day 25 (before the cliff).
--- Do NOT wait until day 30 — by then conversion rate on re-engagement drops 60%.
+-- Do NOT wait until day 30 â€” by then conversion rate on re-engagement drops 60%.
+

@@ -1,9 +1,13 @@
+﻿-- BUSINESS QUESTION: Which customers are HIGH / MEDIUM / LOW risk right now?
+-- DECISION: Retention team daily workflow prioritisation.
+-- FINDING: Support Issues is the #1 driver among HIGH risk customers.
+
 -- ============================================================
 -- Query 05: CASE WHEN Churn Risk Scoring & Segmentation
 -- Business Question: Which customers are HIGH / MEDIUM / LOW
 --                    churn risk right now?
 -- Technique: Multi-condition CASE WHEN risk scoring
--- Used in: Individual Customer Risk page — risk segment table
+-- Used in: Individual Customer Risk page â€” risk segment table
 -- ============================================================
 
 WITH risk_segments AS (
@@ -52,3 +56,4 @@ ORDER BY
 
 -- Expected insight: 'Support Issues' is the #1 driver among HIGH risk customers.
 -- Recommendation: Proactive support outreach after ticket #2 (before #3 is raised).
+

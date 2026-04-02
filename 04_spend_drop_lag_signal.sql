@@ -1,5 +1,9 @@
+﻿-- BUSINESS QUESTION: Do churners show a spend drop before they leave?
+-- DECISION: Whether to build a spend-monitoring alert.
+-- FINDING: Support tickets outperform spend as a leading indicator. Act on tickets first.
+
 -- ============================================================
--- Query 04: Spend Drop Signal — LAG() Churn Early Warning
+-- Query 04: Spend Drop Signal â€” LAG() Churn Early Warning
 -- Business Question: Do customers who churn show a spend drop
 --                    3 months before they leave?
 -- Technique: LAG() window function for spend trend detection
@@ -37,5 +41,6 @@ GROUP BY spend_drop_flag
 ORDER BY spend_drop_flag;
 
 -- Expected insight: Customers with >15% spend drop have 2-3x higher churn rate.
--- This is a leading indicator — act BEFORE they churn, not after.
+-- This is a leading indicator â€” act BEFORE they churn, not after.
 -- Action: Trigger loyalty offer when spend drops >10% month-over-month.
+

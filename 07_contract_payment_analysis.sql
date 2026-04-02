@@ -1,3 +1,7 @@
+﻿-- BUSINESS QUESTION: Does a longer contract reduce churn?
+-- DECISION: Whether to offer discounted annual contracts at onboarding.
+-- FINDING: Two Year contracts churn at less than 5%. Offer annual contract at day 30.
+
 -- ============================================================
 -- Query 07: Contract Type & Payment Method Churn Analysis
 -- Business Question: Does locking customers into longer
@@ -37,3 +41,4 @@ ORDER BY contract_type, churn_rate_pct DESC;
 -- Expected insight: Month-to-Month + Cash payment = highest churn combination.
 -- Expected insight: Two Year contract customers churn <5% regardless of payment method.
 -- Recommendation: Incentivise annual contract sign-up at onboarding.
+

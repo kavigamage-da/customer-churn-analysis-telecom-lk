@@ -1,3 +1,7 @@
+﻿-- BUSINESS QUESTION: At exactly how many tickets does churn become unacceptably high?
+-- DECISION: The exact trigger point for the retention team SOP.
+-- FINDING: Ticket #3 is the cliff. Ticket #2 is the intervention point. Multiplier: 4.2x.
+
 -- ============================================================
 -- Query 06: Support Ticket Impact on Churn (Key Business Insight)
 -- Business Question: At exactly how many support tickets does
@@ -21,4 +25,5 @@ GROUP BY support_tickets
 ORDER BY support_tickets;
 
 -- KEY FINDING: Customers with 3+ tickets churn at 4x+ the rate of 0-ticket customers.
--- Action: Trigger proactive retention call after ticket #2 — before reaching 3.
+-- Action: Trigger proactive retention call after ticket #2 â€” before reaching 3.
+

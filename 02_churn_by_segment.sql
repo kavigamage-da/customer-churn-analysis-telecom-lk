@@ -1,3 +1,7 @@
+﻿-- BUSINESS QUESTION: Which product tier has the highest churn?
+-- DECISION: Where to allocate retention budget this quarter.
+-- FINDING: Basic tier churns most. Offer Basic to Standard upgrade at month 3.
+
 -- ============================================================
 -- Query 02: Churn Rate by Product Tier Segment
 -- Business Question: Which product tier has the highest churn?
@@ -19,5 +23,6 @@ FROM customers
 GROUP BY product_tier
 ORDER BY churn_rate_pct DESC;
 
--- Expected insight: Basic tier churns most — they have less investment in the product.
--- Recommendation: Offer Basic → Standard upgrade incentive at month 3.
+-- Expected insight: Basic tier churns most â€” they have less investment in the product.
+-- Recommendation: Offer Basic â†’ Standard upgrade incentive at month 3.
+

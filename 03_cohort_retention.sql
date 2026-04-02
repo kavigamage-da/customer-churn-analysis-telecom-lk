@@ -1,9 +1,13 @@
+﻿-- BUSINESS QUESTION: Which signup cohort retains best over time?
+-- DECISION: Where to invest in the customer lifecycle.
+-- FINDING: 0-6 month cohort has highest churn. First 6 months are critical.
+
 -- ============================================================
 -- Query 03: Cohort Retention Analysis (Window Functions)
 -- Business Question: Which signup cohort (by tenure group)
 --                    retains customers best over time?
 -- Technique: CTE + CASE WHEN bucketing + window aggregation
--- Used in: Segment Drilldown page — Cohort Retention table
+-- Used in: Segment Drilldown page â€” Cohort Retention table
 -- ============================================================
 
 WITH cohort_buckets AS (
@@ -46,5 +50,6 @@ SELECT
 FROM cohort_stats
 ORDER BY tenure_cohort;
 
--- Expected insight: 0-6 month cohort has highest churn — first 6 months are critical.
+-- Expected insight: 0-6 month cohort has highest churn â€” first 6 months are critical.
 -- Recommendation: Onboarding intervention program for months 1-3.
+
